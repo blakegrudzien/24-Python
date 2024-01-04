@@ -7,13 +7,80 @@ import array
 
 
 
-print("world")
+
 
 def main():
-  board = init_board()
-  print_board(board)
-  sol = get_solutions(board)
-  print_solutions(sol)
+  answer = input("Would you like to Play?(y/n)")
+  if answer != 'y':
+    return
+  
+  else:
+    
+    board = init_board()
+    sol = get_solutions(board)
+    while len(sol)==0:
+
+      board = init_board()
+      
+      sol = get_solutions(board)
+    print("These are your 4 numbers, there is a solution")
+    
+    temp = board.copy()
+  
+    while temp[0]!=24 or temp[1] != 0 or temp[2] != 0 or temp[3] != 0 :
+      print_board(temp)
+      
+      response = input("r = restart, s = see solutions, otherwise, enter the the index for the first number (0,1,2,or 3) in the operation then the number corresponding to the operation then the index of the final number")
+      
+      if response == 'r':
+        temp = board.copy()
+        print(board)
+      if response == 's':
+        
+        print_solutions(sol)
+        print("Better Luck Next Time")
+        return
+      elif response == '0' or response == '1' or response == '2' or response == '3':
+        print(temp[int(response)])
+        op_in = input("0 = '+', 1 = '-', 2 = '*', 3 = '/'" )
+
+        while op_in != '0' and op_in != '1' and op_in != '2' and op_in != '3':
+          print("enter a valid option")
+          op_in = input("0 = '+', 1 = '-', 2 = '*', 3 = '/'" )
+        print(temp)
+        n2 = input("next number")
+        while n2 != '0' and n2 != '1' and n2 != '2' and n2 != '3' and n2 != 'r' and n2 != response:
+          print("enter a valid option")
+          n2 = input(temp)
+        first = min(int(response), int(n2))
+        second = max(int(response), int(n2))
+        higher = max(temp[first], temp[second])
+        lower = min(temp[first], temp[second])
+
+        if op_in == '0':
+          temp[first] = higher + lower
+          temp[second] = 0
+        elif op_in == '1':
+          temp[first] = higher - lower
+          temp[second] = 0
+        elif op_in == '2':
+          temp[first] = higher * lower
+          temp[second] = 0
+        else:
+          temp[first] = higher / lower
+          temp[second] = 0
+    print("Good Job!")
+
+
+
+  
+
+
+
+
+
+
+  
   
   
 
@@ -114,4 +181,4 @@ main()
              
 
 
-       
+        
